@@ -1,158 +1,661 @@
 /****
-  * File containing DFA descriptions
+  * File containing descriptions of RE to NFA conversions
   *
   */
 
-const dfa1 = {
-  "description": "Check if input begins with 01.",
-  "vertices": [
-    {"text": "A", "type": "start"},
-    {"text": "B", "type": "none"},
-    {"text": "C", "type": "none"},
-    {"text": "D", "type": "accept"}
-  ],
-  "edges": [
-    {"start": "A", "end": "B", "text": "0", "type": "forward"},
-    {"start": "B", "end": "C", "text": "1", "type": "forward"},
-    {"start": "C", "end": "C", "text": "0", "type": "self"},
-    {"start": "C", "end": "D", "text": "1", "type": "forward"},
-    {"start": "D", "end": "D", "text": "0,1", "type": "self"}
-  ],
-  "input": [
+const RE1 = {
+  "expression": "01*",
+  "nfa": [
     {
-      "string": "01001",
-      "states": ["A", "B", "C", "C", "C", "D"]
+      "description": "Draw NFA for accepting 0",
+      "vertices": [
+        {"name": "A", "positionX": 0, "positionY": 0},
+        {"name": "B", "positionX": 1, "positionY": 0}
+      ],
+      "edges": [
+        {
+          "start": {"name": "A", "positionX": 0, "positionY": 0},
+          "end": {"name": "B", "positionX": 1, "positionY": 0},
+          "text": "1",
+          "type": "st",
+          "direction": "forward"
+        }
+      ]
     },
     {
-      "string": "010111",
-      "states": ["A", "B", "C", "C", "D", "D", "D"]
+      "description": "Draw NFA for accepting 1*",
+      "vertices": [
+        {"name": "A", "positionX": 0, "positionY": 0},
+        {"name": "B", "positionX": 1, "positionY": 0},
+        {"name": "C", "positionX": 2, "positionY": 0},
+        {"name": "D", "positionX": 3, "positionY": 0}
+      ],
+      "edges": [
+        {
+          "start": {"name": "A", "positionX": 0, "positionY": 0},
+          "end": {"name": "B", "positionX": 1, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "B", "positionX": 1, "positionY": 0},
+          "end": {"name": "C", "positionX": 2, "positionY": 0},
+          "text": "1",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "C", "positionX": 2, "positionY": 0},
+          "end": {"name": "D", "positionX": 3, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "C", "positionX": 2, "positionY": 0},
+          "end": {"name": "B", "positionX": 1, "positionY": 0},
+          "text": "e",
+          "type": "tc",
+          "direction": "backward"
+        },
+        {
+          "start": {"name": "A", "positionX": 0, "positionY": 0},
+          "end": {"name": "D", "positionX": 3, "positionY": 0},
+          "text": "e",
+          "type": "bc",
+          "direction": "forward"
+        }
+      ]
     },
     {
-      "string": "0100110",
-      "states": ["A", "B", "C", "C", "C", "D", "D", "D"]
+      "description": "Combine NFAs to accept 01*",
+      "vertices": [
+        {"name": "A", "positionX": 0, "positionY": 0},
+        {"name": "B", "positionX": 1, "positionY": 0},
+        {"name": "C", "positionX": 2, "positionY": 0},
+        {"name": "D", "positionX": 3, "positionY": 0},
+        {"name": "E", "positionX": 4, "positionY": 0}
+      ],
+      "edges": [
+        {
+          "start": {"name": "A", "positionX": 0, "positionY": 0},
+          "end": {"name": "B", "positionX": 1, "positionY": 0},
+          "text": "0",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "B", "positionX": 1, "positionY": 0},
+          "end": {"name": "C", "positionX": 2, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "C", "positionX": 2, "positionY": 0},
+          "end": {"name": "D", "positionX": 3, "positionY": 0},
+          "text": "1",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "D", "positionX": 3, "positionY": 0},
+          "end": {"name": "E", "positionX": 4, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "D", "positionX": 3, "positionY": 0},
+          "end": {"name": "C", "positionX": 2, "positionY": 0},
+          "text": "e",
+          "type": "tc",
+          "direction": "backward"
+        },
+        {
+          "start": {"name": "B", "positionX": 1, "positionY": 0},
+          "end": {"name": "E", "positionX": 4, "positionY": 0},
+          "text": "e",
+          "type": "bc",
+          "direction": "forward"
+        }
+      ]
     }
   ]
 }
 
-const dfa2 = {
-  "description": "Check if input has exactly three 1s.",
-  "vertices": [
-    {"text": "A", "type": "start"},
-    {"text": "B", "type": "none"},
-    {"text": "C", "type": "none"},
-    {"text": "D", "type": "accept"}
-  ],
-  "edges": [
-    {"start": "A", "end": "A", "text": "0", "type": "self"},
-    {"start": "A", "end": "B", "text": "1", "type": "forward"},
-    {"start": "B", "end": "B", "text": "0", "type": "self"},
-    {"start": "B", "end": "C", "text": "1", "type": "forward"},
-    {"start": "C", "end": "C", "text": "0", "type": "self"},
-    {"start": "C", "end": "D", "text": "1", "type": "forward"},
-    {"start": "D", "end": "D", "text": "0", "type": "self"}
-  ],
-  "input": [
+const RE2 = {
+  "expression": "(0+1)01",
+  "nfa": [
     {
-      "string": "0101010",
-      "states": ["A", "A", "B", "B", "C", "C", "D", "D"]
+      "description": "Draw NFA to accept (0+1)",
+      "vertices": [
+        {"name": "A", "positionX": 0, "positionY": 0},
+        {"name": "B", "positionX": 1, "positionY": 1},
+        {"name": "C", "positionX": 2, "positionY": 1},
+        {"name": "D", "positionX": 1, "positionY": -1},
+        {"name": "E", "positionX": 2, "positionY": -1},
+        {"name": "F", "positionX": 3, "positionY": 0}
+      ],
+      "edges": [
+        {
+          "start": {"name": "A", "positionX": 0, "positionY": 0},
+          "end": {"name": "B", "positionX": 1, "positionY": 1},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "A", "positionX": 0, "positionY": 0},
+          "end": {"name": "D", "positionX": 1, "positionY": -1},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "B", "positionX": 1, "positionY": 1},
+          "end": {"name": "C", "positionX": 2, "positionY": 1},
+          "text": "1",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "D", "positionX": 1, "positionY": -1},
+          "end": {"name": "E", "positionX": 2, "positionY": -1},
+          "text": "0",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "C", "positionX": 2, "positionY": 1},
+          "end": {"name": "F", "positionX": 3, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "E", "positionX": 2, "positionY": -1},
+          "end": {"name": "F", "positionX": 3, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        }
+      ]
     },
     {
-      "string": "00111",
-      "states": ["A", "A", "A", "B", "C", "D"]
+      "description": "Combine NFAs to accept (0+1)0",
+      "vertices": [
+        {"name": "A", "positionX": 0, "positionY": 0},
+        {"name": "B", "positionX": 1, "positionY": 1},
+        {"name": "C", "positionX": 2, "positionY": 1},
+        {"name": "D", "positionX": 1, "positionY": -1},
+        {"name": "E", "positionX": 2, "positionY": -1},
+        {"name": "F", "positionX": 3, "positionY": 0},
+        {"name": "G", "positionX": 4, "positionY": 0}
+      ],
+      "edges": [
+        {
+          "start": {"name": "A", "positionX": 0, "positionY": 0},
+          "end": {"name": "B", "positionX": 1, "positionY": 1},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "A", "positionX": 0, "positionY": 0},
+          "end": {"name": "D", "positionX": 1, "positionY": -1},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "B", "positionX": 1, "positionY": 1},
+          "end": {"name": "C", "positionX": 2, "positionY": 1},
+          "text": "1",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "D", "positionX": 1, "positionY": -1},
+          "end": {"name": "E", "positionX": 2, "positionY": -1},
+          "text": "0",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "C", "positionX": 2, "positionY": 1},
+          "end": {"name": "F", "positionX": 3, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "E", "positionX": 2, "positionY": -1},
+          "end": {"name": "F", "positionX": 3, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "F", "positionX": 3, "positionY": 0},
+          "end": {"name": "G", "positionX": 4, "positionY": 0},
+          "text": "0",
+          "type": "st",
+          "direction": "forward"
+        }
+      ]
     },
     {
-      "string": "0110010",
-      "states": ["A", "A", "B", "C", "C", "C", "D", "D"]
+      "description": "Combine NFAs to accept (0+1)01",
+      "vertices": [
+        {"name": "A", "positionX": 0, "positionY": 0},
+        {"name": "B", "positionX": 1, "positionY": 1},
+        {"name": "C", "positionX": 2, "positionY": 1},
+        {"name": "D", "positionX": 1, "positionY": -1},
+        {"name": "E", "positionX": 2, "positionY": -1},
+        {"name": "F", "positionX": 3, "positionY": 0},
+        {"name": "G", "positionX": 4, "positionY": 0},
+        {"name": "H", "positionX": 5, "positionY": 0}
+      ],
+      "edges": [
+        {
+          "start": {"name": "A", "positionX": 0, "positionY": 0},
+          "end": {"name": "B", "positionX": 1, "positionY": 1},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "A", "positionX": 0, "positionY": 0},
+          "end": {"name": "D", "positionX": 1, "positionY": -1},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "B", "positionX": 1, "positionY": 1},
+          "end": {"name": "C", "positionX": 2, "positionY": 1},
+          "text": "1",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "D", "positionX": 1, "positionY": -1},
+          "end": {"name": "E", "positionX": 2, "positionY": -1},
+          "text": "0",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "C", "positionX": 2, "positionY": 1},
+          "end": {"name": "F", "positionX": 3, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "E", "positionX": 2, "positionY": -1},
+          "end": {"name": "F", "positionX": 3, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "F", "positionX": 3, "positionY": 0},
+          "end": {"name": "G", "positionX": 4, "positionY": 0},
+          "text": "0",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "G", "positionX": 4, "positionY": 0},
+          "end": {"name": "H", "positionX": 5, "positionY": 0},
+          "text": "1",
+          "type": "st",
+          "direction": "forward"
+        }
+      ]
     }
-  ]
+  ] 
 }
 
-const dfa3 = {
-  "description": "Check if input terminates with 0.",
-  "vertices": [
-    {"text": "A", "type": "start"},
-    {"text": "B", "type": "accept"},
-  ],
-  "edges": [
-    {"start": "A", "end": "A", "text": "1", "type": "self"},
-    {"start": "A", "end": "B", "text": "0", "type": "forward"},
-    {"start": "B", "end": "A", "text": "1", "type": "backward"},
-    {"start": "B", "end": "B", "text": "0", "type": "self"}
-  ],
-  "input": [
+const RE3 = {
+  "expression": "00(0+1)*",
+  "nfa": [
     {
-      "string": "0101010",
-      "states": ["A", "B", "A", "B", "A", "B", "A", "B"]
+      "description": "Draw NFA to accept (0+1)",
+      "vertices": [
+        {"name": "A", "positionX": 0, "positionY": 0},
+        {"name": "B", "positionX": 1, "positionY": 1},
+        {"name": "C", "positionX": 2, "positionY": 1},
+        {"name": "D", "positionX": 1, "positionY": -1},
+        {"name": "E", "positionX": 2, "positionY": -1},
+        {"name": "F", "positionX": 3, "positionY": 0}
+      ],
+      "edges": [
+        {
+          "start": {"name": "A", "positionX": 0, "positionY": 0},
+          "end": {"name": "B", "positionX": 1, "positionY": 1},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "B", "positionX": 1, "positionY": 1},
+          "end": {"name": "C", "positionX": 2, "positionY": 1},
+          "text": "0",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "C", "positionX": 2, "positionY": 1},
+          "end": {"name": "F", "positionX": 3, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "A", "positionX": 0, "positionY": 0},
+          "end": {"name": "D", "positionX": 1, "positionY": -1},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "D", "positionX": 1, "positionY": -1},
+          "end": {"name": "E", "positionX": 2, "positionY": -1},
+          "text": "1",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "E", "positionX": 2, "positionY": -1},
+          "end": {"name": "F", "positionX": 3, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        }
+      ]
     },
     {
-      "string": "110100",
-      "states": ["A", "A", "A", "B", "A", "B", "B"]
+      "description": "Update NFA to accept (0+1)*",
+      "vertices": [
+        {"name": "A", "positionX": 0, "positionY": 0},
+        {"name": "B", "positionX": 1, "positionY": 0},
+        {"name": "C", "positionX": 2, "positionY": 1},
+        {"name": "D", "positionX": 3, "positionY": 1},
+        {"name": "E", "positionX": 2, "positionY": -1},
+        {"name": "F", "positionX": 3, "positionY": -1},
+        {"name": "G", "positionX": 4, "positionY": 0},
+        {"name": "H", "positionX": 5, "positionY": 0}
+      ],
+      "edges": [
+        {
+          "start": {"name": "A", "positionX": 0, "positionY": 0},
+          "end": {"name": "B", "positionX": 1, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "B", "positionX": 1, "positionY": 0},
+          "end": {"name": "C", "positionX": 2, "positionY": 1},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "C", "positionX": 2, "positionY": 1},
+          "end": {"name": "D", "positionX": 3, "positionY": 1},
+          "text": "0",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "D", "positionX": 3, "positionY": 1},
+          "end": {"name": "G", "positionX": 4, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "B", "positionX": 1, "positionY": 0},
+          "end": {"name": "E", "positionX": 2, "positionY": -1},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "E", "positionX": 2, "positionY": -1},
+          "end": {"name": "F", "positionX": 3, "positionY": -1},
+          "text": "1",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "F", "positionX": 3, "positionY": -1},
+          "end": {"name": "G", "positionX": 4, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "G", "positionX": 4, "positionY": 0},
+          "end": {"name": "H", "positionX": 5, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "G", "positionX": 4, "positionY": 0},
+          "end": {"name": "B", "positionX": 1, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "backward"
+        },
+        {
+          "start": {"name": "A", "positionX": 0, "positionY": 0},
+          "end": {"name": "H", "positionX": 5, "positionY": 0},
+          "text": "e",
+          "type": "bc",
+          "direction": "forward"
+        }
+      ]
     },
     {
-      "string": "1001",
-      "states": ["A", "A", "B", "B", "A"]
-    }
-  ]
-}
-
-const dfa4 = {
-  "description": "Does input have atleast one 0 and terminates with 1.",
-  "vertices": [
-    {"text": "A", "type": "start"},
-    {"text": "B", "type": "none"},
-    {"text": "C", "type": "accept"}
-  ],
-  "edges": [
-    {"start": "A", "end": "A", "text": "1", "type": "self"},
-    {"start": "A", "end": "B", "text": "0", "type": "forward"},
-    {"start": "B", "end": "C", "text": "1", "type": "forward"},
-    {"start": "B", "end": "B", "text": "0", "type": "self"},
-    {"start": "C", "end": "B", "text": "0", "type": "backward"},
-    {"start": "C", "end": "C", "text": "1", "type": "self"}
-  ],
-  "input": [
-    {
-      "string": "10011",
-      "states": ["A", "A", "B", "B", "C", "C"]
+      "description": "Combine NFAs to accept 0(0+1)*",
+      "vertices": [
+        {"name": "A", "positionX": 0, "positionY": 0},
+        {"name": "B", "positionX": 1, "positionY": 0},
+        {"name": "C", "positionX": 2, "positionY": 0},
+        {"name": "D", "positionX": 3, "positionY": 1},
+        {"name": "E", "positionX": 4, "positionY": 1},
+        {"name": "F", "positionX": 3, "positionY": -1},
+        {"name": "G", "positionX": 4, "positionY": -1},
+        {"name": "H", "positionX": 5, "positionY": 0},
+        {"name": "I", "positionX": 6, "positionY": 0}
+      ],
+      "edges": [
+        {
+          "start": {"name": "A", "positionX": 0, "positionY": 0},
+          "end": {"name": "B", "positionX": 1, "positionY": 0},
+          "text": "0",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "B", "positionX": 1, "positionY": 0},
+          "end": {"name": "C", "positionX": 2, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "C", "positionX": 2, "positionY": 0},
+          "end": {"name": "D", "positionX": 3, "positionY": 1},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "D", "positionX": 3, "positionY": 1},
+          "end": {"name": "E", "positionX": 4, "positionY": 1},
+          "text": "0",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "E", "positionX": 4, "positionY": 1},
+          "end": {"name": "H", "positionX": 5, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "C", "positionX": 2, "positionY": 0},
+          "end": {"name": "F", "positionX": 3, "positionY": -1},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "F", "positionX": 3, "positionY": -1},
+          "end": {"name": "G", "positionX": 4, "positionY": -1},
+          "text": "1",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "G", "positionX": 4, "positionY": -1},
+          "end": {"name": "H", "positionX": 5, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "H", "positionX": 5, "positionY": 0},
+          "end": {"name": "I", "positionX": 6, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "H", "positionX": 5, "positionY": 0},
+          "end": {"name": "C", "positionX": 2, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "backward"
+        },
+        {
+          "start": {"name": "B", "positionX": 1, "positionY": 0},
+          "end": {"name": "I", "positionX": 6, "positionY": 0},
+          "text": "e",
+          "type": "bc",
+          "direction": "forward"
+        }
+      ]
     },
     {
-      "string": "1010",
-      "states": ["A", "A", "B", "C", "B"]
-    },
-    {
-      "string": "10101",
-      "states": ["A", "A", "B", "C", "B", "C"]
-    }
-  ]
-}
-
-const dfa5 = {
-  "description": "Does first occurence of 0 is in a group of size atleast three.",
-  "vertices": [
-    {"text": "A", "type": "start"},
-    {"text": "B", "type": "none"},
-    {"text": "C", "type": "none"},
-    {"text": "D", "type": "accept"}
-  ],
-  "edges": [
-    {"start": "A", "end": "A", "text": "1", "type": "self"},
-    {"start": "A", "end": "B", "text": "0", "type": "forward"},
-    {"start": "B", "end": "C", "text": "0", "type": "forward"},
-    {"start": "C", "end": "D", "text": "0", "type": "forward"},
-    {"start": "D", "end": "D", "text": "0,1", "type": "self"}
-  ],
-  "input": [
-    {
-      "string": "1000",
-      "states": ["A", "A", "B", "C", "D"]
-    },
-    {
-      "string": "00010",
-      "states": ["A", "B", "C", "D", "D", "D"]
-    },
-    {
-      "string": "101",
-      "states": ["A", "A", "B", "B"]
+      "description": "Combine NFAs to accept 00(0+1)*",
+      "vertices": [
+        {"name": "A", "positionX": 0, "positionY": 0},
+        {"name": "B", "positionX": 1, "positionY": 0},
+        {"name": "C", "positionX": 2, "positionY": 0},
+        {"name": "D", "positionX": 3, "positionY": 0},
+        {"name": "E", "positionX": 4, "positionY": 1},
+        {"name": "F", "positionX": 5, "positionY": 1},
+        {"name": "G", "positionX": 4, "positionY": -1},
+        {"name": "H", "positionX": 5, "positionY": -1},
+        {"name": "I", "positionX": 6, "positionY": 0},
+        {"name": "J", "positionX": 7, "positionY": 0}
+      ],
+      "edges": [
+        {
+          "start": {"name": "A", "positionX": 0, "positionY": 0},
+          "end": {"name": "B", "positionX": 1, "positionY": 0},
+          "text": "0",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "B", "positionX": 1, "positionY": 0},
+          "end": {"name": "C", "positionX": 2, "positionY": 0},
+          "text": "0",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "C", "positionX": 2, "positionY": 0},
+          "end": {"name": "D", "positionX": 3, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "D", "positionX": 3, "positionY": 0},
+          "end": {"name": "E", "positionX": 4, "positionY": 1},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "E", "positionX": 4, "positionY": 1},
+          "end": {"name": "F", "positionX": 5, "positionY": 1},
+          "text": "0",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "F", "positionX": 5, "positionY": 1},
+          "end": {"name": "I", "positionX": 6, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "D", "positionX": 3, "positionY": 0},
+          "end": {"name": "G", "positionX": 4, "positionY": -1},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "G", "positionX": 4, "positionY": -1},
+          "end": {"name": "H", "positionX": 5, "positionY": -1},
+          "text": "1",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "H", "positionX": 5, "positionY": -1},
+          "end": {"name": "I", "positionX": 6, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "I", "positionX": 6, "positionY": 0},
+          "end": {"name": "J", "positionX": 7, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "forward"
+        },
+        {
+          "start": {"name": "I", "positionX": 6, "positionY": 0},
+          "end": {"name": "D", "positionX": 3, "positionY": 0},
+          "text": "e",
+          "type": "st",
+          "direction": "backward"
+        },
+        {
+          "start": {"name": "C", "positionX": 2, "positionY": 0},
+          "end": {"name": "J", "positionX": 7, "positionY": 0},
+          "text": "e",
+          "type": "bc",
+          "direction": "forward"
+        }
+      ]
     }
   ]
 }
