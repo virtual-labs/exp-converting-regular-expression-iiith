@@ -5,12 +5,15 @@
 
 width = 500;
 height = 200;
-radius = 25;
+radius = 10;
+curveRadius = 100;
 
-dfa = [dfa1, dfa2, dfa3, dfa4, dfa5];
-dfaIndex = 0
+RE = [RE1, RE2, RE3];
 
-inputIndex = 0
+// dfa = [dfa1, dfa2, dfa3, dfa4, dfa5];
+reIndex = 0
+
+// inputIndex = 0
 inputPointer = -1
 
 nodes = []
@@ -19,25 +22,29 @@ edges = []
 function refreshCanvas(){
   clearElem(canvas);
 
-  curr = ""
   if(inputPointer != -1){
-    console.log("before", inputPointer, curr);
-    // console.log(dfa[dfaIndex]["input"]);
-    curr = dfa[dfaIndex]["input"][inputIndex]["states"][inputPointer];
-    console.log("after", inputPointer, curr);
+    displayCanvas(canvas, RE[reIndex]["nfa"][inputPointer]);
   }
 
-  DFADescriptionContainer = document.getElementById("DFA_description_container");
-  clearElem(DFADescriptionContainer);
-  span = newElement("font", [["id", "DFA_description"], ["color", textColor]]);
-  text = document.createTextNode(dfa[dfaIndex]["description"]);
-  span.appendChild(text);
-  DFADescriptionContainer.appendChild(text);
+  // curr = ""
+  // if(inputPointer != -1){
+  //   console.log("before", inputPointer, curr);
+  //   // console.log(dfa[dfaIndex]["input"]);
+  //   curr = dfa[dfaIndex]["input"][inputIndex]["states"][inputPointer];
+  //   console.log("after", inputPointer, curr);
+  // }
 
-  res = displayCanvas(canvas, dfa[dfaIndex], inputPointer, curr);
+  // DFADescriptionContainer = document.getElementById("DFA_description_container");
+  // clearElem(DFADescriptionContainer);
+  // span = newElement("font", [["id", "DFA_description"], ["color", textColor]]);
+  // text = document.createTextNode(dfa[dfaIndex]["description"]);
+  // span.appendChild(text);
+  // DFADescriptionContainer.appendChild(text);
 
-  nodes = res[0]
-  edges = res[1]
+  // res = displayCanvas(canvas, dfa[dfaIndex], inputPointer, curr);
+
+  // nodes = res[0]
+  // edges = res[1]
 }
 
 function resetInput(){
@@ -50,16 +57,10 @@ function resetInput(){
 function refreshInput(){
   inputContainer = document.getElementById("input_container");
   clearElem(inputContainer);
-  for(let i=0;i<dfa[dfaIndex]["input"][inputIndex]["string"].length;++i){
-    textColor = "black";
-    if(inputPointer == i){
-      textColor = "red";
-    }
-    span = newElement("font", [["id", "text_"+i], ["color", textColor]]);
-    text = document.createTextNode(dfa[dfaIndex]["input"][inputIndex]["string"][i]);
-    span.appendChild(text);
-    inputContainer.appendChild(span);
-  }
+  textColor = "black";
+  text = document.createTextNode(RE[reIndex]["expression"]);
+  inputContainer.appendChild(text);
+
 }
 
 function resetStack(){
@@ -90,28 +91,15 @@ window.addEventListener('load', function(e){
   refreshCanvas();
   resetStack();
 
-  // Event listener for changing DFA
-  changeDFA = document.getElementById("change_dfa");
-  changeDFA.addEventListener("click", function(e){
+  // Event listener for changing RE
+  changeRE = document.getElementById("change_re");
+  changeRE.addEventListener("click", function(e){
     clearElem(canvas);
-    dfaIndex = dfaIndex + 1;
-    if(dfaIndex >= dfa.length){
-      dfaIndex = 0;
+    reIndex = reIndex + 1;
+    if(reIndex >= RE.length){
+      reIndex = 0;
     }
     resetInput();
-    refreshCanvas();
-    resetStack();
-  });
-
-  // Event listener for changing input
-  changeInput = document.getElementById("change_input");
-  changeInput.addEventListener("click", function(e){
-    inputIndex = inputIndex + 1;
-    if(inputIndex >= dfa[dfaIndex]["input"].length){
-      inputIndex = 0;
-    }
-    inputPointer = -1;
-    refreshInput();
     refreshCanvas();
     resetStack();
   });
@@ -119,36 +107,11 @@ window.addEventListener('load', function(e){
   // Event listener for next
   next = document.getElementById("next");
   next.addEventListener("click", function(e){
-    if(inputPointer != dfa[dfaIndex]["input"][inputIndex]["string"].length){
+    if(inputPointer != RE[reIndex]["nfa"].length - 1){
       inputPointer = inputPointer + 1;
       refreshInput();
       refreshCanvas();
-      str = "";
-      if(inputPointer!=0){
-        str += "read character "+dfa[dfaIndex]["input"][inputIndex]["string"][inputPointer-1];
-        str += " and moved from state "+dfa[dfaIndex]["input"][inputIndex]["states"][inputPointer-1];
-        str += " to state "+dfa[dfaIndex]["input"][inputIndex]["states"][inputPointer];
-      }
-      if(inputPointer==0){
-        str += "moved to start state";
-      }
-      addToStack(str);
-
-      // Display popup at end
-      if(inputPointer==dfa[dfaIndex]["input"][inputIndex]["string"].length){
-
-        computationStatus = "Rejected";
-
-        for(itr=0;itr<dfa[dfaIndex]["vertices"].length;++itr){
-          if(dfa[dfaIndex]["vertices"][itr]["text"] == curr){
-            if(dfa[dfaIndex]["vertices"][itr]["type"] == "accept"){
-              computationStatus = "Accepted";
-            }
-            break;
-          }
-        }
-        swal("Input string was "+computationStatus);
-      }
+      addToStack(RE[reIndex]["nfa"][inputPointer]["description"]);
     }
   });
 
