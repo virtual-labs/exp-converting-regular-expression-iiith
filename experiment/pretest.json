@@ -1,39 +1,122 @@
 {
-  "version": 2.0,
-  "questions": [
-    {
-      "question": "This is a Sample Question 1?",
-      "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
-      },
-      "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
-      },
-      "correctAnswer": "a",
-      "difficulty": "beginner"
-    },
-    {
-      "question": "This is a Sample Question 2?",
-      "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
-      },
-      "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
-      },
-      "correctAnswer": "c",
-      "difficulty": "beginner"
-    }
-  ]
-}
+    "version": "2.0",
+    "questions": [
+        {
+            "id": 1,
+            "difficulty": "beginner",
+            "question": "What is a regular expression?",
+            "options": {
+                "a": "A sequence of characters that forms a search pattern",
+                "b": "A programming language",
+                "c": "A type of database",
+                "d": "A network protocol"
+            },
+            "correct": "a",
+            "explanation": "Correct: A regular expression is a sequence of characters that forms a search pattern, used for pattern matching in strings."
+        },
+        {
+            "id": 2,
+            "difficulty": "beginner",
+            "question": "Which symbol represents the union operation in regular expressions?",
+            "options": {
+                "a": "+",
+                "b": "|",
+                "c": "&",
+                "d": "||"
+            },
+            "correct": "b",
+            "explanation": "Correct: The | symbol represents the union operation in regular expressions, allowing choice between alternatives."
+        },
+        {
+            "id": 3,
+            "difficulty": "beginner",
+            "question": "What does the * operator in regular expressions mean?",
+            "options": {
+                "a": "One or more repetitions",
+                "b": "Zero or more repetitions",
+                "c": "Exactly one repetition",
+                "d": "Two or more repetitions"
+            },
+            "correct": "b",
+            "explanation": "Correct: The * operator in regular expressions means zero or more repetitions of the preceding element."
+        },
+        {
+            "id": 4,
+            "difficulty": "intermediate",
+            "question": "What is an NFA?",
+            "options": {
+                "a": "A type of database",
+                "b": "A programming language",
+                "c": "A mathematical model of computation",
+                "d": "A network protocol"
+            },
+            "correct": "c",
+            "explanation": "Correct: An NFA (Non-deterministic Finite Automaton) is a mathematical model of computation that can be in multiple states simultaneously."
+        },
+        {
+            "id": 5,
+            "difficulty": "intermediate",
+            "question": "What is Thompson's construction?",
+            "options": {
+                "a": "A method to build houses",
+                "b": "An algorithm to convert regular expressions to NFAs",
+                "c": "A type of database design",
+                "d": "A network protocol"
+            },
+            "correct": "b",
+            "explanation": "Correct: Thompson's construction is an algorithm that converts regular expressions to Non-deterministic Finite Automata (NFAs)."
+        },
+        {
+            "id": 6,
+            "difficulty": "intermediate",
+            "question": "What is an epsilon transition in an NFA?",
+            "options": {
+                "a": "A transition that requires input",
+                "b": "A transition that doesn't consume any input",
+                "c": "A transition that always fails",
+                "d": "A transition that requires multiple inputs"
+            },
+            "correct": "b",
+            "explanation": "Correct: An epsilon transition in an NFA is a transition that doesn't consume any input symbol, allowing the automaton to change states without reading input."
+        },
+        {
+            "id": 7,
+            "difficulty": "advanced",
+            "question": "What is the time complexity of Thompson's construction?",
+            "options": {
+                "a": "O(n²)",
+                "b": "O(n³)",
+                "c": "O(n)",
+                "d": "O(2ⁿ)"
+            },
+            "correct": "c",
+            "explanation": "Correct: Thompson's construction has a linear time complexity O(n), where n is the length of the regular expression."
+        },
+        {
+            "id": 8,
+            "difficulty": "advanced",
+            "question": "What is the relationship between regular expressions and NFAs?",
+            "options": {
+                "a": "They are completely different concepts",
+                "b": "They are equivalent in terms of the languages they can represent",
+                "c": "NFAs are more powerful than regular expressions",
+                "d": "Regular expressions are more powerful than NFAs"
+            },
+            "correct": "b",
+            "explanation": "Correct: Regular expressions and NFAs are equivalent in terms of the languages they can represent, as proven by Thompson's construction and other theoretical results."
+        },
+        {
+            "id": 9,
+            "difficulty": "advanced",
+            "question": "What is the main advantage of using NFAs over DFAs?",
+            "options": {
+                "a": "NFAs are always faster",
+                "b": "NFAs can have multiple transitions for the same input",
+                "c": "NFAs use less memory",
+                "d": "NFAs are easier to implement"
+            },
+            "correct": "b",
+            "explanation": "Correct: The main advantage of NFAs over DFAs is that they can have multiple transitions for the same input symbol from a state, making them more flexible in representing certain languages."
+        }
+    ]
+} 
