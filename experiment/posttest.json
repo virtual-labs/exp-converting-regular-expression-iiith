@@ -1,122 +1,158 @@
 {
-    "version": "2.0",
+    "version": 2.0,
     "questions": [
         {
-            "id": 1,
-            "difficulty": "beginner",
             "question": "What is the first step in Thompson's construction?",
-            "options": {
+            "answers": {
                 "a": "Convert to DFA",
                 "b": "Create basic NFAs for individual symbols",
                 "c": "Remove epsilon transitions",
                 "d": "Minimize the automaton"
             },
-            "correct": "b",
-            "explanation": "Correct: The first step in Thompson's construction is to create basic NFAs for individual symbols in the regular expression."
+            "explanations": {
+                "a": "Incorrect: Converting to DFA is not the first step in Thompson's construction.",
+                "b": "Correct: The first step in Thompson's construction is to create basic NFAs for individual symbols in the regular expression.",
+                "c": "Incorrect: Removing epsilon transitions is not part of Thompson's construction.",
+                "d": "Incorrect: Minimizing the automaton is not the first step in Thompson's construction."
+            },
+            "correctAnswer": "b",
+            "difficulty": "beginner"
         },
         {
-            "id": 2,
-            "difficulty": "beginner",
             "question": "How are concatenated expressions handled in Thompson's construction?",
-            "options": {
+            "answers": {
                 "a": "By creating parallel paths",
                 "b": "By connecting accept state of first NFA to start state of second NFA",
                 "c": "By merging states",
                 "d": "By creating new transitions"
             },
-            "correct": "b",
-            "explanation": "Correct: In Thompson's construction, concatenation is handled by connecting the accept state of the first NFA to the start state of the second NFA with an epsilon transition."
+            "explanations": {
+                "a": "Incorrect: Parallel paths are used for union, not concatenation.",
+                "b": "Correct: In Thompson's construction, concatenation is handled by connecting the accept state of the first NFA to the start state of the second NFA with an epsilon transition.",
+                "c": "Incorrect: States are not merged for concatenation.",
+                "d": "Incorrect: New transitions alone do not handle concatenation properly."
+            },
+            "correctAnswer": "b",
+            "difficulty": "beginner"
         },
         {
-            "id": 3,
-            "difficulty": "beginner",
             "question": "What is the purpose of epsilon transitions in the constructed NFA?",
-            "options": {
+            "answers": {
                 "a": "To make the NFA faster",
                 "b": "To allow state changes without consuming input",
                 "c": "To reduce memory usage",
                 "d": "To make the NFA deterministic"
             },
-            "correct": "b",
-            "explanation": "Correct: Epsilon transitions allow the NFA to change states without consuming any input symbol, which is essential for implementing operations like concatenation and union."
+            "explanations": {
+                "a": "Incorrect: Epsilon transitions do not make the NFA faster.",
+                "b": "Correct: Epsilon transitions allow the NFA to change states without consuming any input symbol, which is essential for implementing operations like concatenation and union.",
+                "c": "Incorrect: Epsilon transitions do not reduce memory usage.",
+                "d": "Incorrect: Epsilon transitions make the NFA non-deterministic, not deterministic."
+            },
+            "correctAnswer": "b",
+            "difficulty": "beginner"
         },
         {
-            "id": 4,
-            "difficulty": "intermediate",
             "question": "How is the union operation (|) implemented in Thompson's construction?",
-            "options": {
+            "answers": {
                 "a": "By creating a single path",
                 "b": "By creating parallel paths with epsilon transitions",
                 "c": "By merging states",
                 "d": "By creating new symbols"
             },
-            "correct": "b",
-            "explanation": "Correct: The union operation is implemented by creating parallel paths with epsilon transitions from a new start state to both NFAs and from both NFAs to a new accept state."
+            "explanations": {
+                "a": "Incorrect: A single path cannot represent union of two expressions.",
+                "b": "Correct: The union operation is implemented by creating parallel paths with epsilon transitions from a new start state to both NFAs and from both NFAs to a new accept state.",
+                "c": "Incorrect: States are not merged for union operation.",
+                "d": "Incorrect: New symbols are not created for union operation."
+            },
+            "correctAnswer": "b",
+            "difficulty": "intermediate"
         },
         {
-            "id": 5,
-            "difficulty": "intermediate",
             "question": "What is the purpose of the stack in Thompson's construction?",
-            "options": {
+            "answers": {
                 "a": "To store the input string",
                 "b": "To keep track of NFAs being built",
                 "c": "To store the final result",
                 "d": "To store intermediate calculations"
             },
-            "correct": "b",
-            "explanation": "Correct: The stack in Thompson's construction is used to keep track of the NFAs being built, allowing for proper handling of nested expressions and operators."
+            "explanations": {
+                "a": "Incorrect: The stack does not store the input string.",
+                "b": "Correct: The stack in Thompson's construction is used to keep track of the NFAs being built, allowing for proper handling of nested expressions and operators.",
+                "c": "Incorrect: The stack does not store the final result.",
+                "d": "Incorrect: The stack does not store intermediate calculations."
+            },
+            "correctAnswer": "b",
+            "difficulty": "intermediate"
         },
         {
-            "id": 6,
-            "difficulty": "intermediate",
             "question": "How is the Kleene star (*) operation implemented in Thompson's construction?",
-            "options": {
+            "answers": {
                 "a": "By creating a single path",
                 "b": "By creating a loop with epsilon transitions",
                 "c": "By merging states",
                 "d": "By creating new symbols"
             },
-            "correct": "b",
-            "explanation": "Correct: The Kleene star operation is implemented by creating a loop with epsilon transitions, allowing for zero or more repetitions of the subexpression."
+            "explanations": {
+                "a": "Incorrect: A single path cannot represent the Kleene star operation.",
+                "b": "Correct: The Kleene star operation is implemented by creating a loop with epsilon transitions, allowing for zero or more repetitions of the subexpression.",
+                "c": "Incorrect: States are not merged for the Kleene star operation.",
+                "d": "Incorrect: New symbols are not created for the Kleene star operation."
+            },
+            "correctAnswer": "b",
+            "difficulty": "intermediate"
         },
         {
-            "id": 7,
-            "difficulty": "advanced",
             "question": "What is the space complexity of the NFA constructed using Thompson's construction?",
-            "options": {
+            "answers": {
                 "a": "O(n²)",
                 "b": "O(n³)",
                 "c": "O(n)",
                 "d": "O(2ⁿ)"
             },
-            "correct": "c",
-            "explanation": "Correct: The space complexity of the NFA constructed using Thompson's construction is O(n), where n is the length of the regular expression."
+            "explanations": {
+                "a": "Incorrect: The space complexity is not quadratic.",
+                "b": "Incorrect: The space complexity is not cubic.",
+                "c": "Correct: The space complexity of the NFA constructed using Thompson's construction is O(n), where n is the length of the regular expression.",
+                "d": "Incorrect: The space complexity is not exponential."
+            },
+            "correctAnswer": "c",
+            "difficulty": "advanced"
         },
         {
-            "id": 8,
-            "difficulty": "advanced",
             "question": "Why is Thompson's construction important in compiler design?",
-            "options": {
+            "answers": {
                 "a": "It makes compilers faster",
                 "b": "It provides a way to convert regular expressions to NFAs for lexical analysis",
                 "c": "It reduces memory usage",
                 "d": "It makes code more readable"
             },
-            "correct": "b",
-            "explanation": "Correct: Thompson's construction is important in compiler design because it provides a way to convert regular expressions to NFAs, which are used in lexical analysis to recognize tokens."
+            "explanations": {
+                "a": "Incorrect: Thompson's construction does not directly make compilers faster.",
+                "b": "Correct: Thompson's construction is important in compiler design because it provides a way to convert regular expressions to NFAs, which are used in lexical analysis to recognize tokens.",
+                "c": "Incorrect: Thompson's construction does not directly reduce memory usage.",
+                "d": "Incorrect: Thompson's construction does not make code more readable."
+            },
+            "correctAnswer": "b",
+            "difficulty": "advanced"
         },
         {
-            "id": 9,
-            "difficulty": "advanced",
             "question": "What is the relationship between the number of states in the final NFA and the length of the regular expression?",
-            "options": {
+            "answers": {
                 "a": "The number of states is always equal to the length",
                 "b": "The number of states is at most twice the length",
                 "c": "The number of states is at most three times the length",
                 "d": "The number of states is exponential in the length"
             },
-            "correct": "b",
-            "explanation": "Correct: In Thompson's construction, the number of states in the final NFA is at most twice the length of the regular expression, as each symbol and operator can create at most two new states."
+            "explanations": {
+                "a": "Incorrect: The number of states is not always equal to the length.",
+                "b": "Correct: In Thompson's construction, the number of states in the final NFA is at most twice the length of the regular expression, as each symbol and operator can create at most two new states.",
+                "c": "Incorrect: The number of states is not three times the length.",
+                "d": "Incorrect: The number of states is not exponential in the length."
+            },
+            "correctAnswer": "b",
+            "difficulty": "advanced"
         }
     ]
 } 
