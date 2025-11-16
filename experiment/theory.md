@@ -11,31 +11,40 @@ Regular expressions are a formal way to describe patterns in strings. Think of t
 
 #### Basic Building Blocks of Regular Expressions
 
-1. **Basic Symbols (Literals)**: Individual characters from an alphabet
+1. **Empty String (ε)**: Represents the string with no characters
+   - Example: The regular expression `ε` matches only the empty string ""
+   - This is the identity element for concatenation
+
+2. **Empty Set (∅)**: Represents a pattern that matches no strings at all
+   - The empty set language contains no strings
+   - This is different from the empty string, which contains one string (the empty string itself)
+
+3. **Basic Symbols (Literals)**: Individual characters from an alphabet
    - Example: The regular expression `a` matches only the string "a"
    - Example: The regular expression `7` matches only the string "7"
 
-2. **Concatenation**: Writing expressions next to each other to form sequences
+4. **Concatenation**: Writing expressions next to each other to form sequences
    - Example: `ab` matches only the string "ab"
    - Example: `hello` matches only the string "hello"
 
-3. **Union (Alternation) - |**: Choice between alternatives
+5. **Union (Alternation) - |**: Choice between alternatives
    - Example: `a|b` matches either "a" or "b"
    - Example: `cat|dog` matches either "cat" or "dog"
 
-4. **Kleene Star (**)**: Zero or more repetitions
+6. **Kleene Star (*)**: Zero or more repetitions
    - Example: `a*` matches "", "a", "aa", "aaa", etc.
    - Example: `(ab)*` matches "", "ab", "abab", "ababab", etc.
 
-5. **Plus (+)**: One or more repetitions
+7. **Plus (+)**: One or more repetitions
    - Example: `a+` matches "a", "aa", "aaa", etc. (but not the empty string)
    - Example: `digit+` matches one or more digits
 
 #### Examples of Regular Expressions in Action
 
-- **Email validation pattern**: `[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,4}`
-- **Phone number pattern**: `\d{3}-\d{3}-\d{4}`
-- **Variable names in programming**: `[a-zA-Z_][a-zA-Z0-9_]*`
+- **Binary strings ending with 01**: `(0|1)*01`
+- **Strings containing at least one 'a'**: `(a|b)*a(a|b)*`
+- **Even number of 0's**: `1*(01*01*)*`
+- **Strings starting and ending with the same symbol over {a,b}**: `a(a|b)*a|b(a|b)*b|a|b`
 
 ### Non-deterministic Finite Automata (NFA)
 
@@ -75,6 +84,17 @@ Consider an NFA that accepts strings ending with "01":
 
 Thompson's construction, developed by Ken Thompson in 1968, is a systematic method for converting regular expressions into equivalent NFAs. The algorithm works recursively by building small NFAs for basic expressions and then combining them using specific patterns for each operator.
 
+#### Implementation Approach
+
+Thompson's construction is typically implemented using a **stack-based approach**. As the algorithm processes the regular expression (usually in postfix notation), it:
+
+1. **Pushes NFAs onto a stack** as basic symbols are encountered
+2. **Pops NFAs from the stack** when operators are encountered
+3. **Combines the popped NFAs** according to the operator's construction rule
+4. **Pushes the resulting NFA** back onto the stack
+
+This stack-based approach naturally handles the compositional nature of regular expressions, where smaller expressions are built up into larger ones. The stack keeps track of the NFAs being built, allowing for proper handling of nested expressions and operator precedence.
+
 #### Historical Fun Fact
 
 Ken Thompson, who developed this algorithm, is the same person who co-created the Unix operating system and the C programming language. His work on regular expressions was motivated by the need for pattern matching in text editors, particularly the 'ed' editor in early Unix systems.
@@ -86,10 +106,35 @@ Thompson's algorithm follows these specific construction patterns:
 **1. Base Case - Single Symbol 'a':**
 
 ```text
-Start → [state1] --a--> [state2] (final)
+    ┌────────┐         a        ┌────────┐
+   →│   q₀   │ ───────────────> │   q₁   │ ◎
+    └────────┘                  └────────┘
+    (start)                     (final)
 ```
 
+This creates a simple two-state NFA where:
+
+- q₀ is the start state (indicated by →)
+- q₁ is the final/accepting state (indicated by ◎)
+- The transition labeled 'a' connects them
+
 **2. Concatenation - Expressions r₁r₂:**
+
+```text
+    ┌──────────┐            ┌──────────┐
+  → │   NFA₁   │             │   NFA₂   │ ◎
+    │   (r₁)   │            │   (r₂)   │
+    └──────────┘            └──────────┘
+         │                       ↑
+         └────────── ε ──────────┘
+
+Detailed view:
+    ┌────┐        ┌────┐    ε     ┌────┐        ┌────┐
+  → │ q₀ │ ─(r₁)→ │ q₁ │ ───────> │ q₂ │ ─(r₂)→ │ q₃ │ ◎
+    └────┘        └────┘          └────┘        └────┘
+```
+
+Construction steps:
 
 - Build NFAs for r₁ and r₂ separately
 - Connect the final state of r₁ to the start state of r₂ with an ε-transition
@@ -98,36 +143,119 @@ Start → [state1] --a--> [state2] (final)
 
 **3. Union - Expressions r₁|r₂:**
 
+```text
+                    ε     ┌──────────┐     ε
+              ┌─────────> │   NFA₁   │ ─────────┐
+              │           │   (r₁)   │          │
+    ┌────┐    │           └──────────┘          │    ┌────┐
+  → │ q₀ │ ───┤                                 ├──> │ qf │ ◎
+    └────┘    │           ┌──────────┐          │    └────┘
+   (new)      │           │   NFA₂   │          │    (new)
+              └────────────> │   (r₂)   │ ─────────┘
+                    ε     └──────────┘     ε
+```
+
+Construction steps:
+
 - Build NFAs for r₁ and r₂ separately
-- Create a new start state with ε-transitions to both start states
-- Create a new final state with ε-transitions from both final states
+- Create a new start state (q₀) with ε-transitions to both start states
+- Create a new final state (qf) with ε-transitions from both final states
+- This allows the automaton to "choose" either path
 
 **4. Kleene Star - Expression r*:**
 
+```text
+              ┌─────── ε (skip) ─────────┐
+              │                          │
+              ↓                          ↓
+    ┌────┐    │    ┌──────────┐         ┌────┐
+  → │ q₀ │ ───┴──> │   NFA    │ ──────> │ qf │ ◎
+    └────┘    ε    │   (r)    │    ε    └────┘
+   (new)           └──────────┘           (new)
+                         │  ↑
+                         └──┘
+                      ε (repeat)
+```
+
+Construction steps:
+
 - Build an NFA for r
-- Create new start and final states
+- Create new start (q₀) and final (qf) states
 - Add ε-transitions: new start → original start, original final → new final
-- Add ε-transitions: new start → new final (for zero repetitions)
-- Add ε-transitions: original final → original start (for repetitions)
+- Add ε-transition: new start → new final (for zero repetitions)
+- Add ε-transition: original final → original start (for multiple repetitions)
+- This creates a loop allowing 0 or more repetitions
 
 **5. Plus Operation - Expression r+:**
 
+```text
+    ┌────┐         ┌──────────┐         ┌────┐
+  → │ q₀ │ ──────> │   NFA    │ ──────> │ qf │ ◎
+    └────┘    ε    │   (r)    │    ε    └────┘
+   (new)           └──────────┘           (new)
+                         │  ↑
+                         └──┘
+                      ε (repeat)
+
+Note: Unlike r*, there is NO direct ε-transition from q₀ to qf
+```
+
+Construction steps:
+
 - Build an NFA for r
 - Similar to Kleene star but without the direct ε-transition from start to final
-- This ensures at least one occurrence of r
+- This ensures at least one occurrence of r before accepting
+- The loop back allows for multiple repetitions
 
 #### Step-by-Step Example
 
 Let's convert the regular expression `(a|b)*abb` to an NFA:
 
 1. **Build NFA for 'a'**: Simple two-state NFA
-2. **Build NFA for 'b'**: Simple two-state NFA  
-3. **Build NFA for 'a|b'**: Use union construction
-4. **Build NFA for '(a|b)*'**: Apply Kleene star construction
-5. **Build NFAs for second 'a', third 'b', fourth 'b'**: Simple constructions
-6. **Concatenate all parts**: Connect using concatenation construction
 
-The resulting NFA will have multiple states connected with both symbol transitions and ε-transitions.
+   ```text
+   → (q₀) ─a→ (q₁)
+   ```
+
+2. **Build NFA for 'b'**: Simple two-state NFA
+
+   ```text
+   → (q₂) ─b→ (q₃)
+   ```
+
+3. **Build NFA for 'a|b'**: Use union construction
+
+   ```text
+          ε   ─a→
+        ┌───→ (  ) ───┐ ε
+   → ( ) │              ├──→ ( )
+        └───→ (  ) ───┘
+          ε   ─b→
+   ```
+
+4. **Build NFA for '(a|b)*'**: Apply Kleene star construction
+
+   ```text
+         ┌──────ε──────┐
+         │             ↓
+   → ( ) ┴──ε→ [a|b] ──┴─ε→ ( )
+               ↑  │
+               └──┘ ε
+   ```
+
+5. **Build NFAs for 'a', 'b', 'b'**: Simple constructions
+
+   ```text
+   → ( ) ─a→ ( )    → ( ) ─b→ ( )    → ( ) ─b→ ( ) ◎
+   ```
+
+6. **Concatenate all parts**: Final NFA for `(a|b)*abb`
+
+   ```text
+   → [(a|b)*] ─ε→ [a] ─ε→ [b] ─ε→ [b] ◎
+   ```
+
+The resulting NFA has approximately 11 states with multiple ε-transitions connecting the components. Each component maintains Thompson's properties: single entry and exit points, enabling clean composition.
 
 ### The Fundamental Equivalence
 
