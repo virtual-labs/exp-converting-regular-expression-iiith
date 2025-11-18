@@ -154,7 +154,7 @@ Construction steps:
   → │ q₀ │ ───┤                                 ├──> │ qf │ ◎
     └────┘    │           ┌──────────┐          │    └────┘
    (new)      │           │   NFA₂   │          │    (new)
-              └────────────> │   (r₂)   │ ─────────┘
+              └─────────> │   (r₂)   │ ─────────┘
                     ε     └──────────┘     ε
 ```
 
@@ -171,7 +171,7 @@ Construction steps:
 
               ┌─────── ε (skip) ─────────┐
               │                          │
-              ↓                          ↓
+              │                          ↓
     ┌────┐    │    ┌──────────┐         ┌────┐
   → │ q₀ │ ───┴──> │   NFA    │ ──────> │ qf │ ◎
     └────┘    ε    │   (r)    │    ε    └────┘
@@ -219,14 +219,14 @@ Let's convert the regular expression `(a|b)*abb` to an NFA:
 1. **Build NFA for 'a'**: Simple two-state NFA
 
    ```text
-   → (q₀) ─a→ (q₁)
+   → (q₀) ─ a → (q₁)
    ```
 
 2. **Build NFA for 'b'**: Simple two-state NFA
 
    ```text
 
-   → (q₂) ─b→ (q₃)
+   → (q₂) ─ b → (q₃)
    ```
 
 3. **Build NFA for 'a|b'**: Use union construction
@@ -235,7 +235,7 @@ Let's convert the regular expression `(a|b)*abb` to an NFA:
 
           ε   ─a→
         ┌───→ (  ) ───┐ ε
-   → ( ) │              ├──→ ( )
+   → ( )│             ├──→ ( )
         └───→ (  ) ───┘
           ε   ─b→
    ```
@@ -247,7 +247,7 @@ Let's convert the regular expression `(a|b)*abb` to an NFA:
          ┌──────ε──────┐
          │             ↓
    → ( ) ┴──ε→ [a|b] ──┴─ε→ ( )
-               ↑  │
+               │  ↑
                └──┘ ε
    ```
 
@@ -255,7 +255,7 @@ Let's convert the regular expression `(a|b)*abb` to an NFA:
 
    ```text
 
-   → ( ) ─a→ ( )    → ( ) ─b→ ( )    → ( ) ─b→ ( ) ◎
+   → ( ) ─ a → ( ) → ( ) ─ b → ( ) → ( ) ─ b → ( ) ◎
    ```
 
 6. **Concatenate all parts**: Final NFA for `(a|b)*abb`
