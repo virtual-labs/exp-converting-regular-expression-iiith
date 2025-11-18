@@ -1,0 +1,2 @@
+
+To understand and implement Thompson's construction algorithm for converting regular expressions to Non-deterministic Finite Automata (NFA), and to demonstrate the equivalence between regular expressions and NFAs through interactive visualization. 

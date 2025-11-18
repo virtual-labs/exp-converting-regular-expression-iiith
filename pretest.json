@@ -1,0 +1,158 @@
+{
+    "version": 2.0,
+    "questions": [
+        {
+            "question": "What is a regular expression?",
+            "answers": {
+                "a": "A sequence of characters that forms a search pattern",
+                "b": "A programming language",
+                "c": "A type of database",
+                "d": "A network protocol"
+            },
+            "explanations": {
+                "a": "Correct: A regular expression is a sequence of characters that forms a search pattern, used for pattern matching in strings.",
+                "b": "Incorrect: A regular expression is not a programming language.",
+                "c": "Incorrect: A regular expression is not a type of database.",
+                "d": "Incorrect: A regular expression is not a network protocol."
+            },
+            "correctAnswer": "a",
+            "difficulty": "beginner"
+        },
+        {
+            "question": "Which symbol represents the union operation in regular expressions?",
+            "answers": {
+                "a": "+",
+                "b": "|",
+                "c": "&",
+                "d": "||"
+            },
+            "explanations": {
+                "a": "Incorrect: The + symbol represents one or more repetitions.",
+                "b": "Correct: The | symbol represents the union operation in regular expressions, allowing choice between alternatives.",
+                "c": "Incorrect: The & symbol is not used for union in regular expressions.",
+                "d": "Incorrect: The || symbol is not used for union in regular expressions."
+            },
+            "correctAnswer": "b",
+            "difficulty": "beginner"
+        },
+        {
+            "question": "What does the * operator in regular expressions mean?",
+            "answers": {
+                "a": "One or more repetitions",
+                "b": "Zero or more repetitions",
+                "c": "Exactly one repetition",
+                "d": "Two or more repetitions"
+            },
+            "explanations": {
+                "a": "Incorrect: The + operator means one or more repetitions.",
+                "b": "Correct: The * operator in regular expressions means zero or more repetitions of the preceding element.",
+                "c": "Incorrect: The * operator allows zero or more repetitions, not exactly one.",
+                "d": "Incorrect: The * operator allows zero or more repetitions, not two or more."
+            },
+            "correctAnswer": "b",
+            "difficulty": "beginner"
+        },
+        {
+            "question": "What is an NFA?",
+            "answers": {
+                "a": "A type of database",
+                "b": "A programming language",
+                "c": "A mathematical model of computation",
+                "d": "A network protocol"
+            },
+            "explanations": {
+                "a": "Incorrect: An NFA is not a type of database.",
+                "b": "Incorrect: An NFA is not a programming language.",
+                "c": "Correct: An NFA (Non-deterministic Finite Automaton) is a mathematical model of computation that can be in multiple states simultaneously.",
+                "d": "Incorrect: An NFA is not a network protocol."
+            },
+            "correctAnswer": "c",
+            "difficulty": "intermediate"
+        },
+        {
+            "question": "What is Thompson's construction?",
+            "answers": {
+                "a": "A method to build houses",
+                "b": "An algorithm to convert regular expressions to NFAs",
+                "c": "A type of database design",
+                "d": "A network protocol"
+            },
+            "explanations": {
+                "a": "Incorrect: Thompson's construction is not related to building houses.",
+                "b": "Correct: Thompson's construction is an algorithm that converts regular expressions to Non-deterministic Finite Automata (NFAs).",
+                "c": "Incorrect: Thompson's construction is not a type of database design.",
+                "d": "Incorrect: Thompson's construction is not a network protocol."
+            },
+            "correctAnswer": "b",
+            "difficulty": "intermediate"
+        },
+        {
+            "question": "What is an epsilon transition in an NFA?",
+            "answers": {
+                "a": "A transition that requires input",
+                "b": "A transition that doesn't consume any input",
+                "c": "A transition that always fails",
+                "d": "A transition that requires multiple inputs"
+            },
+            "explanations": {
+                "a": "Incorrect: An epsilon transition does not require input.",
+                "b": "Correct: An epsilon transition in an NFA is a transition that doesn't consume any input symbol, allowing the automaton to change states without reading input.",
+                "c": "Incorrect: An epsilon transition does not always fail.",
+                "d": "Incorrect: An epsilon transition does not require multiple inputs."
+            },
+            "correctAnswer": "b",
+            "difficulty": "intermediate"
+        },
+        {
+            "question": "What is the time complexity of Thompson's construction?",
+            "answers": {
+                "a": "O(n²)",
+                "b": "O(n³)",
+                "c": "O(n)",
+                "d": "O(2ⁿ)"
+            },
+            "explanations": {
+                "a": "Incorrect: Thompson's construction is not quadratic in time complexity.",
+                "b": "Incorrect: Thompson's construction is not cubic in time complexity.",
+                "c": "Correct: Thompson's construction has a linear time complexity O(n), where n is the length of the regular expression.",
+                "d": "Incorrect: Thompson's construction is not exponential in time complexity."
+            },
+            "correctAnswer": "c",
+            "difficulty": "advanced"
+        },
+        {
+            "question": "What is the relationship between regular expressions and NFAs?",
+            "answers": {
+                "a": "They are completely different concepts",
+                "b": "They are equivalent in terms of the languages they can represent",
+                "c": "NFAs are more powerful than regular expressions",
+                "d": "Regular expressions are more powerful than NFAs"
+            },
+            "explanations": {
+                "a": "Incorrect: Regular expressions and NFAs are related concepts.",
+                "b": "Correct: Regular expressions and NFAs are equivalent in terms of the languages they can represent, as proven by Thompson's construction and other theoretical results.",
+                "c": "Incorrect: NFAs and regular expressions have equivalent expressive power.",
+                "d": "Incorrect: Regular expressions and NFAs have equivalent expressive power."
+            },
+            "correctAnswer": "b",
+            "difficulty": "advanced"
+        },
+        {
+            "question": "What is the main advantage of using NFAs over DFAs?",
+            "answers": {
+                "a": "NFAs are always faster",
+                "b": "NFAs can have multiple transitions for the same input",
+                "c": "NFAs use less memory",
+                "d": "NFAs are easier to implement"
+            },
+            "explanations": {
+                "a": "Incorrect: NFAs are not necessarily faster than DFAs.",
+                "b": "Correct: The main advantage of NFAs over DFAs is that they can have multiple transitions for the same input symbol from a state, making them more flexible in representing certain languages.",
+                "c": "Incorrect: NFAs do not necessarily use less memory than DFAs.",
+                "d": "Incorrect: NFAs are not necessarily easier to implement than DFAs."
+            },
+            "correctAnswer": "b",
+            "difficulty": "advanced"
+        }
+    ]
+} 
