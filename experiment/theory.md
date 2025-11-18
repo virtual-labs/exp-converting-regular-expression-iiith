@@ -106,6 +106,7 @@ Thompson's algorithm follows these specific construction patterns:
 **1. Base Case - Single Symbol 'a':**
 
 ```text
+
     ┌────────┐         a        ┌────────┐
    →│   q₀   │ ───────────────> │   q₁   │ ◎
     └────────┘                  └────────┘
@@ -121,8 +122,9 @@ This creates a simple two-state NFA where:
 **2. Concatenation - Expressions r₁r₂:**
 
 ```text
+
     ┌──────────┐            ┌──────────┐
-  → │   NFA₁   │             │   NFA₂   │ ◎
+  → │   NFA₁   │            │   NFA₂   │ ◎
     │   (r₁)   │            │   (r₂)   │
     └──────────┘            └──────────┘
          │                       ↑
@@ -144,6 +146,7 @@ Construction steps:
 **3. Union - Expressions r₁|r₂:**
 
 ```text
+
                     ε     ┌──────────┐     ε
               ┌─────────> │   NFA₁   │ ─────────┐
               │           │   (r₁)   │          │
@@ -165,6 +168,7 @@ Construction steps:
 **4. Kleene Star - Expression r*:**
 
 ```text
+
               ┌─────── ε (skip) ─────────┐
               │                          │
               ↓                          ↓
@@ -189,6 +193,7 @@ Construction steps:
 **5. Plus Operation - Expression r+:**
 
 ```text
+
     ┌────┐         ┌──────────┐         ┌────┐
   → │ q₀ │ ──────> │   NFA    │ ──────> │ qf │ ◎
     └────┘    ε    │   (r)    │    ε    └────┘
@@ -220,12 +225,14 @@ Let's convert the regular expression `(a|b)*abb` to an NFA:
 2. **Build NFA for 'b'**: Simple two-state NFA
 
    ```text
+
    → (q₂) ─b→ (q₃)
    ```
 
 3. **Build NFA for 'a|b'**: Use union construction
 
    ```text
+
           ε   ─a→
         ┌───→ (  ) ───┐ ε
    → ( ) │              ├──→ ( )
@@ -236,6 +243,7 @@ Let's convert the regular expression `(a|b)*abb` to an NFA:
 4. **Build NFA for '(a|b)*'**: Apply Kleene star construction
 
    ```text
+
          ┌──────ε──────┐
          │             ↓
    → ( ) ┴──ε→ [a|b] ──┴─ε→ ( )
@@ -246,12 +254,14 @@ Let's convert the regular expression `(a|b)*abb` to an NFA:
 5. **Build NFAs for 'a', 'b', 'b'**: Simple constructions
 
    ```text
+
    → ( ) ─a→ ( )    → ( ) ─b→ ( )    → ( ) ─b→ ( ) ◎
    ```
 
 6. **Concatenate all parts**: Final NFA for `(a|b)*abb`
 
    ```text
+
    → [(a|b)*] ─ε→ [a] ─ε→ [b] ─ε→ [b] ◎
    ```
 
